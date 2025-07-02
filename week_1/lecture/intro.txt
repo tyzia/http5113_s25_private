@@ -51,6 +51,15 @@ https://github.com/tyzia/http5113_s25_public
 
 
 
+
+
+
+
+
+
+
+
+
 Expectations
 
 Hard work
@@ -296,6 +305,41 @@ let shouldAlign = true;
 
 
 
+
+
+
+
+Consistent naming convention
+
+
+
+If you have your naming convention
+it is very important to keep it
+consistently.
+
+
+Bad:
+
+const UserName = 'John';
+const user_age = 25;
+function Fetch_Data() { ... }
+
+
+Good:
+
+const userName = 'John';
+const userAge = 25;
+function fetchData() { ... }
+
+
+
+
+
+
+
+
+
+
 Copy-Paste your own code
 
 
@@ -449,6 +493,17 @@ const nonEmpty = flattened.filter(item => ![null, false, undefined].includes(ite
 const doubled = nonEmpty.map(item => item * 2);
 
 
+
+
+
+
+
+
+
+
+
+
+
 SRP
 
 Single Responsibility Principle
@@ -579,7 +634,15 @@ It allows to read and understand code easier.
 
 Example:
 
+"Onebrownfoxjumpedoutofthebox"
+
 "Onebrow nfoxjump ed o utof thebox"
+
+
+
+
+
+
 
 
 Fixed:
