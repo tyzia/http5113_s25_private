@@ -1,0 +1,675 @@
+
+
+
+
+
+
+
+
+
+
+
+
+Welcome to the course!
+
+
+
+
+
+
+
+
+
+
+Andrei
+
+https://www.linkedin.com/in/andreinavumau/
+
+Contacting me
+
+If you need clarification, or you have a question
+the best is to send me message through Blackboard.
+
+
+
+Attendance
+
+Please, attend classes.
+
+If you can't attend,
+send me a message before the start of the class
+or within 48 hours after it.
+Please, provide the reason.
+
+
+
+
+
+The course materials are available online:
+
+https://github.com/tyzia/http5113_s25_public
+
+
+
+Expectations
+
+Hard work
+The course is relatively easy, learning new material
+might be hard.
+
+Honesty
+Please, don't submit the code which is not yours.
+
+Desire to learn
+I appreciate questions from you, I appreciate your attention.
+
+Timely submissions
+Assignments may quickly pile up for you, please submit on time.
+
+Attendance
+You can't be late to your interview, or meetings, or work.
+Same applies to your classes.
+
+Do not disturb
+If you need to talk, you may leave the classroom any time and come back.
+
+
+
+
+
+Your questions
+
+You might have a lot of questions, it is always nice to hear them.
+I will pause and ask for your questions.
+
+I will not be able to spend too much time on questions, as I need
+to move on with the material, but after the lecture, you are
+more than welcome to reach out to me and I will clarify anything what you
+didn't understand.
+
+
+
+
+
+
+Critical Path (WIP)
+
+
+
+
+
+Submissions and Marks
+
+Each week you will have a task to complete
+in GitHub Classroom.
+
+There is no mark on this course,
+just Satisfactory / Unsatisfactory.
+
+
+
+
+
+
+
+
+
+What is your goal in this course?
+
+
+
+
+
+
+
+
+
+
+
+
+To become a web developer.
+
+To achieve this goal, you need to learn.
+I am here to help you learn.
+
+
+
+Friends vs enemies
+
+
+
+Best friends
+
+1 You
+2 Teacher
+3 AI
+
+
+
+Best enemies
+
+Copy-Paste
+
+
+
+
+
+Copy-Paste AI generated code
+
+Why?
+
+- You don't learn.
+- AI makes mistakes. You need experience and
+knowledge to spot them.
+
+Use AI:
+
+- to learn
+- to get answers
+- to get explanations
+
+
+
+
+
+
+
+
+
+What is the hardest thing in programming?
+
+
+
+
+
+
+
+
+
+
+
+naming variables
+
+
+
+
+
+
+
+Naming conventions
+
+
+Short
+
+const x
+const arr
+const tmp
+
+Problem here - we don't know what is inside.
+
+
+
+Long
+
+const numberOfActiveUsersInTheCurrentSessionForBrokerUser
+
+Problem here - it is hard to read.
+
+
+If both short and long names are bad,
+what to choose?
+
+We need a balance.
+
+
+
+Best practice in naming your variables
+
+1) Use meaningful names.
+
+Bad:
+let x = 10;
+let str = 'Hello';
+
+Good
+let numberOfRetries = 10;
+let welcomeMessage = 'Hello';
+
+2) Use nouns for variables
+& verbs for functions.
+
+Bad:
+let calculateTotalPrice = 25;
+function userAge() {}
+
+Good:
+let userAge = 25;
+function calculateTotalPrice() {}
+
+3) Avoid abbreviations.
+
+Bad:
+let usrCnt = 10;
+
+Good:
+let userCount = 10;
+
+4) Consider scope when naming
+i.e. how long will variable 'live'.
+
+-- Larger scope => longer name
+-- Smaller scope => shorter name
+
+Large (global) scope:
+const maximumAllowedConnections = 100;
+
+Small (local) scope:
+for (let i = 0; i < 2; i++) { console.log(i) }
+
+5) Avoid reserved words.
+
+Bad:
+const class = 'Math';
+
+Good:
+const className = 'Math';
+
+6) Name of a variable with boolean value
+should answer: true or false
+and start with 'is' or 'has' or 'should'.
+
+Bad:
+let visible = true;
+let activities = true;
+let align = true;
+
+Good:
+let isVisible = true;
+let hasActivities = true;
+let shouldAlign = true;
+
+
+
+
+
+
+
+
+
+Copy-Paste your own code
+
+
+DRY principle ("Don't Repeat Yourself")
+
+In simple terms: Avoid duplicating code
+
+Instead, reuse it through:
+
+- functions
+- components
+- modules
+
+Why violating DRY is bad?
+
+Example:
+
+I need to write code to calculate
+total amount and tax amount for some items.
+
+WET (Write Everything Twice)
+
+
+Steps:
+
+1) Create function for total calculation:
+
+function calculateTotal(items) {
+  let total = 0;
+  for (let item of items) {
+    total += item.price * item.quantity;
+  }
+  return total;
+}
+
+2) Copy this function:
+
+function calculateTotal(items) {
+  let total = 0;
+  for (let item of items) {
+    total += item.price * item.quantity;
+  }
+  return total;
+}
+
+3) Rename it and add tax calculation:
+
+function calculateTax(items) {
+  let total = 0;
+  for (let item of items) {
+    total += item.price * item.quantity;
+  }
+  return total * 0.13;
+}
+
+Result:
+
+function calculateTotal(items) {
+  let total = 0;
+  for (let item of items) {
+    total += item.price * item.quantity;
+  }
+  return total;
+}
+
+function calculateTax(items) {
+  let subtotal = 0;
+  for (let item of items) {
+    subtotal += item.price * item.quantity;
+  }
+  return subtotal * 0.13;
+}
+
+
+Problems:
+
+- Harder to Maintain
+Must change code twice if need to update.
+
+- More Bugs
+Forgot to update in one place.
+
+- Bloated Code
+Codebase is unnecessary larger and harder to read.
+
+- Slower Development
+More code means more time spent debugging and refactoring.
+
+
+How to fix?
+
+Extract shared logic
+
+1) Create shared function:
+
+function calculateSubtotal(items) {
+  let subtotal = 0;
+  for (let item of items) {
+    subtotal += item.price * item.quantity;
+  }
+  return subtotal;
+}
+
+2) Use it for total calculation:
+
+function calculateTotal(items) {
+  return calculateSubtotal(items);
+}
+
+3) Use it for tax calculation
+
+function calculateTax(items) {
+  return calculateSubtotal(items) * 0.13;
+}
+
+
+
+
+KISS
+
+Keep It Short & Simple
+
+
+
+The idea: "The simplest solution is usually the best one."
+
+Example:
+
+const data = [[5, 10], null, [undefined, 15], [0, 20], [false, 25]];
+
+Clean 'data' array:
+
+- Flatten it (make one dimensional array)
+[5, 10, null, undefined, 15, 0, 20, false, 25]
+
+- Remove values: null, false, undefined
+[5, 10, 15, 0, 20, 25]
+
+- Double remaining numbers
+[10, 20, 30, 0, 40, 50]
+
+
+"Clever" but hard to read code
+
+const doubled = data.reduce((acc, val) => acc.concat(val), []).filter(Boolean).map(x => x * 2);
+
+KISS:
+
+const flattened = [].concat(...data);
+const nonEmpty = flattened.filter(item => ![null, false, undefined].includes(item));
+const doubled = nonEmpty.map(item => item * 2);
+
+
+SRP
+
+Single Responsibility Principle
+
+Your function should do only one thing.
+
+
+Example:
+
+A function that processes user data for a dashboard:
+
+- Validates user input
+- Fetches user data from a database
+- Calculates statistics
+- Formats the output
+
+async function processUserDashboard(userId) {
+  // 1. Input validation
+  if (!userId || typeof userId !== 'string') {
+    throw new Error('Invalid user ID');
+  }
+
+  // 2. Database fetch
+  const user = await db.query('SELECT * FROM users WHERE id = ?', [userId]);
+  if (!user) throw new Error('User not found');
+
+  // 3. Calculate stats
+  const totalOrders = user.orders.length;
+  const totalSpent = user.orders.reduce((sum, order) => sum + order.amount, 0);
+
+  // 4. Format output
+  return {
+    userId: user.id,
+    name: user.name,
+    orders: totalOrders,
+    spent: `$${totalSpent.toFixed(2)}`,
+    lastActive: user.lastLogin.toISOString()
+  };
+}
+
+Problems:
+
+- Does validation, data fetching, calculations, and formatting.
+- Hard to reuse individual steps (e.g., can’t use the stats calculator elsewhere).
+- Changes to one part (e.g., database schema) require editing the entire function.
+
+
+
+
+
+
+
+
+Pure validation function (only checks input)
+
+function validateUserId(userId) {
+  if (!userId || typeof userId !== 'string') {
+    throw new Error('Invalid user ID');
+  }
+}
+
+Pure database function (only fetches data)
+
+async function fetchUser(userId) {
+  const user = await db.query('SELECT * FROM users WHERE id = ?', [userId]);
+  if (!user) throw new Error('User not found');
+  return user;
+}
+
+
+Pure calculation function (only computes stats)
+
+function calculateUserStats(orders) {
+  return {
+    totalOrders: orders.length,
+    totalSpent: orders.reduce((sum, order) => sum + order.amount, 0)
+  };
+}
+
+
+Pure formatting function (only prepares output)
+
+function formatDashboard(user, stats) {
+  return {
+    userId: user.id,
+    name: user.name,
+    orders: stats.totalOrders,
+    spent: `$${stats.totalSpent.toFixed(2)}`,
+    lastActive: user.lastLogin.toISOString()
+  };
+}
+
+
+
+Main function orchestrates the steps
+
+async function processUserDashboard(userId) {
+  validateUserId(userId);
+  const user = await fetchUser(userId);
+  const stats = calculateUserStats(user.orders);
+  return formatDashboard(user, stats);
+}
+
+
+Benefits:
+
+- Each function does one thing.
+- Reusable (e.g., calculateUserStats can be used elsewhere).
+- Easier to test (each function can be tested in isolation).
+- Changes to one part (e.g., formatting) don’t risk breaking others.
+
+
+
+
+
+
+
+Code formatting
+
+
+
+
+
+
+It allows to read and understand code easier.
+
+
+
+Example:
+
+"Onebrow nfoxjump ed o utof thebox"
+
+
+Fixed:
+
+"One brown fox jumped out of the box"
+
+
+
+
+
+
+
+
+
+
+Indentations and spacing
+
+These help to read code.
+
+Very bad:
+
+function getUserData(userId){const user=db.find(u=>u.id===userId);if(user){console.log(user.name);return user;}else{throw new Error('User not found');}}
+
+Bad:
+
+function getUserData(userId){
+const user=db.find(u=>u.id===userId);
+if(user){
+console.log(user.name);
+return user;
+}else{
+throw new Error('User not found');
+}
+}
+
+Good:
+
+function getUserData(userId) {
+    const user = db.find(u => u.id === userId);
+
+    if (user) {
+        console.log(user.name);
+        return user;
+    } else {
+        throw new Error('User not found');
+    }
+}
+
+
+Here I fixed:
+
+- indentation
+- spaces around operators (=)
+
+
+
+
+
+Consistent naming convention
+
+
+
+If you have your naming convention
+it is very important to keep it
+consistently.
+
+
+Bad:
+
+const UserName = 'John';
+const user_age = 25;
+function Fetch_Data() { ... }
+
+
+Good:
+
+const userName = 'John';
+const userAge = 25;
+function fetchData() { ... }
+
+
+
+
+
+
+
+
+
+
+
+
+
+Thank you
