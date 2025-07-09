@@ -1,0 +1,581 @@
+
+
+
+
+
+
+Plan
+
+
+
+
+Intro to programming
+Why we need variables
+git
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+What we learn and why JS
+
+
+
+We are learning Web Development.
+
+Let's make it clear, we don't create programs
+for self-driving cars, or medical equipment.
+
+We create programs for Web.
+
+Example,
+
+I have an HTML page with styling (CSS).
+I want to show a banner on top of this page
+saying "Hello world"
+when user clicks on a button on a page.
+
+How to do that?
+
+Because the task which I want to fulfil relates to the browser,
+there are three options:
+
+- HTML
+- CSS
+- JavaScript (JS)
+
+HTML is not a programming language. It is a markup language.
+HTML formats & structures the display of the content
+on a web page (in browser).
+
+CSS is not a programming language. It is syntax for stylesheets.
+CSS adds styling to the content marked up with HTML.
+
+Only JS is a programming language among these three.
+
+We are going to talk about basics of programming using JS
+as an example.
+
+
+
+
+
+
+
+
+
+
+Instructions
+
+
+In programming language you give instructions
+to the engine to do what you want.
+
+Keyword "instructions"!
+
+Example:
+
+PHP code - you give instructions to PHP engine on the server
+C# code - you give instructions to ASP.NET engine
+JS code - you give instructions to the JS engine in the browser
+
+The difference between these programming languages is
+only in the target engine where they will be run/interpreted
+and the syntax they use.
+
+They still share the same concepts of programming languages.
+
+
+
+
+
+
+
+
+
+
+Saving "things" or context
+
+
+
+While writing instructions we will need these common things:
+
+- store or save data
+- make decisions on data
+
+
+Very basic example:
+
+Human task:
+calculate 2 + 3 and tell me the result.
+
+
+If I need to write code for this task,
+I need to store these values somewhere.
+
+This is what variables are for.
+
+const firstNumber = 2;
+const secondNumber = 3;
+const result = firstNumber + secondNumber;
+
+Here:
+
+const - declaration of a variable type
+firstNumber/secondNumber/result - variables (their names)
+= - assignment operator. It assigns a value from right to the left
+1 and 2 - numbers, literally
++ - math plus sign
+; - each expression is finished by this sign
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+git
+
+
+
+
+
+
+
+
+
+
+
+
+git is a tool, usually called version control.
+
+What is version control?
+
+
+
+
+
+
+
+
+
+
+demo: hello, hello W/world, hello W/world!/!!!
+
+
+
+
+
+
+
+
+
+
+
+
+git allows us to:
+
+- Track changes in our files
+- Create different versions (branches) of our files
+- Apply (copy, remove, add) changes between files
+- Backup our changes and allow to restore anything
+- Collaborate as a team on the same files
+
+
+
+
+
+
+
+
+
+
+
+
+
+Install
+https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+
+
+
+
+
+
+Changes
+
+
+
+You can track changes, by adding them to commits.
+Think of a commit as a combination of changes in different files.
+
+Commit is the main building block in git.
+
+How to create a commit? How to track changes?
+
+The process is:
+
+You will have a "container" where you can keep adding
+your changes and once you are ready to save these changes
+in git, you will create a commit.
+
+Creating a commit is like "ok, git, save this change in your memory".
+
+When I say "git saves the changes" this doesn't mean, that
+if you don't commit, your changes are not saved.
+
+If you don't commit (don't create a commit), git is not
+"remembering" this change.
+
+This "container" where you "put" your changes is staging area in git.
+
+How to create a commit?
+
+1) Select which changes you would like to add to commit.
+Once changes are ready for commit, you are not required
+to create a commit right away. You can continue working
+on your task and keep adding more changes into staging area.
+2) Once you are ready, you can create a commit. This will save
+changes in git memory and clear the container.
+
+
+To do the same with git commands:
+
+1) git add <file name> OR git add . (for all changes)
+2) git commit -m "name for your change"
+
+
+
+
+
+
+
+Which changes can be?
+
+Let's talk about different states of your files in git:
+
+1) Untracked files.
+New files which you have added.
+
+2) Changes not staged for commit.
+You made change to existing file. It will appear in this section.
+
+3) Changes to be committed.
+You made a change in existing file and prepared it for
+commit.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Useful commands:
+
+> git add .
+Add changes from all files.
+
+> git commit -m "Commit description"
+Create commit with description.
+
+> git commit -am "Commit description"
+= git add . + git commit -m
+
+> git commit
+
+This command will open terminal editor for you
+(usually, nano or vim). If you are not familiar
+with these editors, use -m flag instead:
+
+> git commit -m "your message"
+
+
+
+
+
+
+
+
+
+Branches
+
+I can create a copy of my project.
+This is what branch is in git.
+
+Each git repo by default has one branch, main.
+
+You can create as many branches as you wish.
+
+
+IMPORTANT!
+Always create your own branch when working on your assignment!
+
+
+
+Useful commands:
+
+> git branch name-of-branch
+Copy all changes from current branch into "name-of-branch".
+You will still stay on your current branch.
+
+> git checkout -b name-of-branch
+Copy all changes from current branch into "name-of-branch"
+and switch to that branch.
+
+> git checkout existing-branch-name
+Switch from current branch to "existing-branch-name".
+
+
+
+
+
+
+
+
+
+
+
+
+
+Status
+
+> git status
+
+This is very safe and useful command.
+
+The main command which will tell you
+everything about what is currently
+happening with your code and git.
+
+Please, use it as often as possible.
+
+
+
+
+
+
+
+
+
+
+Other git terminology
+
+repo (repository)
+
+This is a location where git will store all data.
+It can be local or remote.
+
+> git clone <url>
+
+Command to copy remote repository to your machine by url.
+
+> git log --oneline
+
+Display your commit history (all your changes)
+
+> git push origin test
+
+Here I specify where to push - origin.
+It is the name of github.com in my local repo.
+I also specify which branch I want to push - test.
+
+> git pull
+
+This command is to get latest changes from remote
+repository. With github classroom you will be
+pulling from your private repository.
+
+
+
+
+
+
+
+
+
+
+
+
+Demo (in the terminal)
+
+> cd my_folder
+> mkdir new_folder
+> cd new_folder
+> git status
+> git init
+> git status
+> git branch test
+> git branch
+> git checkout test
+create a file index.txt
+> git add index.txt
+> git commit -m "Create index.txt"
+> git log --one-line
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+git commit
+
+It should answer the question:
+
+"After applying this commit it will..."
+
+For example:
+
+Commit message is "Add file to homepage", then:
+"After applying this commit it will Add file to homepage"
+
+Commit message is "Replace old submit button with new", then:
+"After applying this commit it will Replace old submit button with new"
+
+
+How to create a good commit message?
+
+Recommendations:
+
+1) Write your commit messages in the imperative mood,
+as if you're giving a command or instruction.
+
+Bad:
+"Added link to homepage"
+
+Good:
+"Add link to homepage"
+
+
+2) Keep your commit message short!
+It is a summary of changes.
+
+Bad:
+"Fix a small typo in the README file that was causing confusion"
+
+Good:
+"Fix typo in README"
+
+3) Always start with a capital letter.
+
+Bad:
+"add form element to index.html"
+
+Good:
+"Add form element to index.html"
+
+4) Avoid vague messages.
+Explain what you are fixing.
+
+Bad:
+"Fix stuff"
+"change"
+"update"
+"fix"
+"typo"
+
+Good:
+"Fix broken image on about page"
+
+5) Write for your audience.
+
+- Your future self (we forget things quickly!).
+- Other developers on your team.
+
+6) Test your commit message.
+Before finalizing your commit, ask yourself:
+
+- Does this message explain what the change does?
+- Does it explain why the change was made?
+- Is it easy to understand for someone
+who didn't write the code?
+
+
+Be consistent!
+Follow a consistent style across all your projects.
+
+
+
+
+
+
+
+
+demo of assignment
+
+
+
+
+
+Copy link to the Assignment
+Accept the Assignment
+Go to your private repo for the Assignment
+Copy the link to the repo
+> git clone <link>
+Open this folder in your IDE
+> git checkout -b solution
+> git add .
+> git commit -m "Add form for lab 1"
+> git push -u origin solution
+Go to "Pull requests"
+Click "New pull request"
+Select base: main and compare: solution
+Click "Create pull request"
+Show failing tests in Actions tab
+Show PR title and description
+Show files changed
+
+
+
+
+
+
+
+Thank you!

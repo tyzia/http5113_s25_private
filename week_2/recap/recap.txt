@@ -1,0 +1,218 @@
+Recap from Week 1
+(delivered on Week 2)
+
+
+Naming conventions
+
+1. Meaningful names
+const x = 10 -> const numberOfRetries = 10
+
+2. Nouns for variables
+const y = 25 -> const userAge = 25
+
+3. Verbs for functions
+const userAge() -> const getUserAge()
+
+4. No abbreviations
+const usrCnt = 10 -> const userCount = 10
+
+5. Short name for small scope
+for (let i = 0; i < 2; i++) { console.log(i) }
+
+6. Longer name for larger scope
+const maximumAllowedConnections = 100
+
+7. No reserved words (class, etc)
+const class = 'math' -> const className = 'math'
+
+8. Boolean names start with 'is' or 'has' or 'should'
+const visible = true -> const isVisible = true
+const activities = false -> const hasActivities = false
+
+
+Consistent Naming Conventions
+
+Stick to one style
+
+Example (camelCase)
+
+const userName = 'John';
+const userAge = 25;
+function fetchData() { ... }
+
+DRY (Don’t Repeat Yourself)
+
+- Avoid duplication
+- Reuse code via functions
+
+Bad:
+
+function calculateTotal(items) {
+  let total = 0;
+  for (let item of items) {
+    total += item.price * item.quantity;
+  }
+  return total;
+}
+
+function calculateTax(items) {
+  let subtotal = 0;
+  for (let item of items) {
+    subtotal += item.price * item.quantity;
+  }
+  return subtotal * 0.13;
+}
+
+Good:
+
+Shared function:
+function calculateSubtotal(items) {
+  let subtotal = 0;
+  for (let item of items) {
+    subtotal += item.price * item.quantity;
+  }
+  return subtotal;
+}
+
+Usage:
+function calculateTotal(items) {
+  return calculateSubtotal(items);
+}
+function calculateTax(items) {
+  return calculateSubtotal(items) * 0.13;
+}
+
+Benefits:
+
+- Easier maintenance
+- Fewer bugs
+- Cleaner code
+
+KISS (Keep It Short & Simple)
+
+Prefer simple solutions to complex.
+
+Clever:
+const doubled = data.reduce((acc, val) => acc.concat(val), []).filter(Boolean).map(x => x * 2);
+
+Simple:
+const flattened = [].concat(...data);
+const nonEmpty = flattened.filter(item => ![null, false, undefined].includes(item));
+const doubled = nonEmpty.map(item => item * 2);
+
+SRP (Single Responsibility Principle)
+
+Each function should do one thing.
+
+Bad:
+
+async function processUserDashboard(userId) {
+  // 1. Input validation
+  if (!userId || typeof userId !== 'string') {
+    throw new Error('Invalid user ID');
+  }
+
+  // 2. Database fetch
+  const user = await db.query('SELECT * FROM users WHERE id = ?', [userId]);
+  if (!user) throw new Error('User not found');
+
+  // 3. Calculate stats
+  const totalOrders = user.orders.length;
+  const totalSpent = user.orders.reduce((sum, order) => sum + order.amount, 0);
+
+  // 4. Format output
+  return {
+    userId: user.id,
+    name: user.name,
+    orders: totalOrders,
+    spent: `$${totalSpent.toFixed(2)}`,
+    lastActive: user.lastLogin.toISOString()
+  };
+}
+
+Problems:
+
+- Does many things.
+- Hard to reuse individual steps
+- Changes require editing the entire function.
+
+Solution:
+
+Pure functions (only one task)
+
+1)
+function validateUserId(userId) {
+  if (!userId || typeof userId !== 'string') {
+    throw new Error('Invalid user ID');
+  }
+}
+
+2)
+async function fetchUser(userId) {
+  const user = await db.query('SELECT * FROM users WHERE id = ?', [userId]);
+  if (!user) throw new Error('User not found');
+  return user;
+}
+
+3)
+function calculateUserStats(orders) {
+  return {
+    totalOrders: orders.length,
+    totalSpent: orders.reduce((sum, order) => sum + order.amount, 0)
+  };
+}
+
+4)
+function formatDashboard(user, stats) {
+  return {
+    userId: user.id,
+    name: user.name,
+    orders: stats.totalOrders,
+    spent: `$${stats.totalSpent.toFixed(2)}`,
+    lastActive: user.lastLogin.toISOString()
+  };
+}
+
+Main function
+
+async function processUserDashboard(userId) {
+  validateUserId(userId);
+  const user = await fetchUser(userId);
+  const stats = calculateUserStats(user.orders);
+  return formatDashboard(user, stats);
+}
+
+Benefits:
+
+- I can use function in other parts of code.
+- Easier to test
+- Easier to maintain.
+
+Code Formatting
+
+Use indentation,
+spacing, and line breaks for readability.
+
+Bad:
+
+function getUserData(userId){
+const user=db.find(u=>u.id===userId);
+if(user){
+console.log(user.name);
+return user;
+}else{
+throw new Error('User not found');
+}
+}
+
+Good:
+
+function getUserData(userId) {
+    const user = db.find(u => u.id === userId);
+    if (user) {
+        console.log(user.name);
+        return user;
+    } else {
+        throw new Error('User not found');
+    }
+}
