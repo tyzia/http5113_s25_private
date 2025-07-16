@@ -1,0 +1,116 @@
+name: Automated Checks
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  check_restricted_files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Need full history for diff
+
+      - name: Fetch base branch
+        run: git fetch origin main
+
+      - name: Validate changes
+        id: check_restricted_files
+        run: |
+          # Read allowed files
+          mapfile -t ALLOWED_FILES < <(grep -v '^[[:space:]]*$' .github/allowed-changes.txt | sed 's|/$||')
+
+          # Get files with ACTUAL content changes (not just git metadata)
+          CHANGED_FILES=$(git diff --name-only --diff-filter=ACMRT origin/main HEAD)
+
+          for file in $CHANGED_FILES; do
+            file="${file#./}"
+            file="${file%/}"
+
+            # Skip allowed paths
+            [[ "$file" == "assignment/"* ]] && continue
+
+            # Check allowlist
+            allowed=false
+            for pattern in "${ALLOWED_FILES[@]}"; do
+              if [[ "$file" == "$pattern" || "$file" == "$pattern"/* ]]; then
+                allowed=true
+                break
+              fi
+            done
+
+            # For restricted files, verify content matches main
+            if ! $allowed; then
+              if ! git diff --quiet origin/main HEAD -- "$file"; then
+                # Detect if file is newly added (doesn't exist in main)
+                if ! git ls-tree --name-only -r origin/main | grep -Fxq "$file"; then
+                  file_status="NEW FILE"
+                  recovery_cmd="git rm --cached \"$file\" && rm -f \"$file\""
+                else
+                  file_status="MODIFIED FILE"
+                  recovery_cmd="git checkout origin/main -- \"$file\""
+                fi
+          
+                echo "::error::❌ Illegal modification detected::"
+                echo "================================================"
+                echo "File: $file"
+                echo "Type: Restricted $file_status (must match main branch)"
+                echo "================================================"
+                echo "Allowed files pattern:"
+                cat .github/allowed-changes.txt
+                echo ""
+                echo "Changes detected:"
+                echo "---------------------------------"
+                git diff origin/main HEAD -- "$file" | head -n 20
+                echo ""
+                echo "How to recover:"
+                echo "---------------------------------"
+                echo "1. To remove this unauthorized change:"
+                echo "   $recovery_cmd"
+                echo "2. Commit the correction:"
+                echo "   git commit -m \"Remove unauthorized $file\""
+                echo "3. git push"
+                echo "================================================"
+                exit 1
+              fi
+            fi
+          done
+
+          echo "✅ All changes validated"
+    outputs:
+      allowed: ${{ steps.check_restricted_files.outcome == 'success' }}
+
+  check_student_work:
+    needs: [check_restricted_files]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout student PR code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Cypress Tests
+        id: cypress_tests
+        continue-on-error: true
+        run: |
+          npx cypress run -s cypress/e2e/tests.cy.js  || echo "cypress_failed=true" >> $GITHUB_OUTPUT
+
+      - name: Show test results
+        if: always()
+        run: |
+          echo "Test Results:"
+          echo "Cypress: ${{ steps.cypress_tests.outputs.cypress_failed && 'failed' || 'passed' }}"
+          
+          # Initialize penalty message
+          PENALTY_MESSAGE=""
+          
+          if [[ "${{ steps.cypress_tests.outputs.cypress_failed }}" == "true" ]]; then
+            echo "::error::Some tests failed$PENALTY_MESSAGE"
+            exit 1
+          else
+            echo "All tests passed$PENALTY_MESSAGE"
+          fi

@@ -1,0 +1,16 @@
+{
+  "editor.formatOnSave": false,
+  "editor.insertSpaces": false,
+  "editor.detectIndentation": false,
+  "html.autoClosingTags": false,
+  "javascript.format.enable": false,
+  "typescript.format.enable": false,
+  "json.format.enable": false,
+  "prettier.enable": false,
+  "eslint.autoFixOnSave": false,
+  "editor.autoClosingQuotes": "never",
+  "editor.autoSurround": "never",
+  "javascript.suggest.autoImports": false,
+  "typescript.suggest.autoImports": false,
+  "typescript.updateImportsOnFileMove.enabled": "never"
+}

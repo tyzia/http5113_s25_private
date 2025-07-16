@@ -1,0 +1,673 @@
+
+
+
+
+
+
+Plan
+
+git merge + conflict
+root
+paths
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+git merge conflict
+
+It occurs when two branches change the same line.
+
+Demo
+
+> mkdir 1
+> cd 1
+> git init
+> vim index.html :i hello world :x
+> git add index.html
+> git commit -m "Create index.html file"
+> git brach a
+> git branch b
+> git branch
+> git checkout a
+> vim index.html :i a :x
+> git commit -am "Add a"
+> git checkout b
+> vim index.html :i b :x
+> git commit -am "Add b"
+> git merge a
+> git status  Unmerged paths
+> vim index.html
+
+<<<<<<< HEAD
+b hello world
+=======
+a hello world
+>>>>>>> a
+
+ - `<<<<<<< HEAD` marks the beginning of the conflict.
+ - `=======` separates the changes from the two branches.
+ - `>>>>>>> a` marks the end of the conflict.
+
+
+Resolve the conflict - means delete all that is not needed
+and git add index.html
+
+> git status  // the conflict is still not resolved
+> git addd index.html  // resolve the conflict
+> git commit // will create Merge commit
+> git log --oneline
+
+> git checkout a
+> vim index.html // we don't see b
+
+
+Summary
+
+1. What causes merge conflicts?
+When two branches modify the same part of a file,
+and Git cannot automatically merge the changes.
+
+2. How to see the conflicts?
+Open the file and look for `<<<<<<<`, `=======`, and `>>>>>>>`.
+
+3. How to resolve conflicts?
+Manually edit the file.
+Choose which changes to keep.
+Delete all not needed and markers (`<<<<<<<`, `=======`, and `>>>>>>>`)
+git add .
+git commit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Let's talk about files:
+
+- Where files reside
+- How to locate files
+
+
+
+
+
+
+
+
+
+
+
+
+Path
+
+
+
+
+
+
+Path === location of file or resource
+
+The most common resources:
+
+- images (<img>)
+- scripts (*.js)
+- stylesheets (*.css)
+
+How to use paths, we need to know
+what is root first.
+
+
+Root
+
+The root refers to the main folder.
+
+The term "root" is more of a concept,
+rather than a reference to a
+directory with a specific name.
+
+Roots or main folders can be:
+
+- Topmost directory of the Linux-based file system (/)
+- Main folder of a project (project root)
+- Web root or Document root
+
+
+File system root (/)
+
+It’s the starting point of the entire file system on the server.
+It is not actual name, root doesn't have a name.
+It is referenced with '/'.
+
+Example
+
+/var/www/domain/index.html
+
+Other slashes in the example - path separators
+between directories.
+
+
+
+
+
+Practice
+
+"Refer to the folder 'courses' inside 'humber' folder
+which is in the root of the server"
+
+Your answer:
+---
+
+path = ""
+
+---
+
+
+
+
+Project root
+
+Main folder of the project.
+This is important as all files in
+the project will use this root in code
+if using relative paths (see below).
+
+Example:
+
+/Users/andrei/Documents/projects/my_project/*
+
+* - means that there are some files inside
+
+The 'root' of your project is 'my_project' folder.
+The 'root' of your server is the leftmost /
+
+
+Web Root
+
+The folder accessible from the web
+when user types https://mydomain.com (example)
+
+Web server (Apache or Nginx) has a setting
+for each domain, referring to a specific folder
+on a server which will be the Web root for this domain.
+
+Example:
+
+1) You host a website with domain: my-super-domain.com
+2) Website files on a server are located at:
+
+/var/www/my-super-domain.com/public_html/*
+
+3) Web server has a configuration for your domain
+specifying its Web root as:
+
+/var/www/my-super-domain.com/public_html/
+
+4) Once user types 'my-super-domain.com'
+in the browser:
+
+ -- Browser finds out which server
+ is responsible for 'my-super-domain.com' (DNS)
+ -- Browser sends a request to the
+ server asking for index page.
+ -- Web server finds Web root of 'my-super-domain.com'
+ -- Web server sends index.html located at
+
+/var/www/my-super-domain.com/public_html/index.html
+
+
+To sum up - the same file accessed differently:
+
+via web url:
+https://my-super-domain.com/index.html
+
+via file system:
+/var/www/my-super-domain.com/public_html/index.html
+
+
+
+
+
+
+
+Relative and Absolute paths
+
+
+
+Absolute path
+
+An absolute path specifies the exact
+location of a file from the root directory.
+
+Example:
+
+/users/username/projects/my-website.com/js/app.js
+
+Mainly when developing for web, we use:
+
+Web Absolute path
+
+https://www.example.com/js/app.js
+
+Starts from the domain root, is absolute in the context
+of the web.
+
+Example:
+
+I want to refer this JS file:
+/users/username/projects/my-website.com/js/app.js
+
+From my index.html file:
+/users/username/projects/my-website.com/index.html
+
+Code:
+<script src="https://my-website.com/js/app.js"></script>
+
+This is absolute file location,
+because it is locating file app.js absolutely:
+
+- Located on a server hosting 'my-website.com'
+- Located in Web root folder of 'my-website.com'
+- Located inside js/ folder
+
+Pros of Absolute paths:
+
+- They always point to the same file,
+regardless of the location of the request.
+
+Example:
+
+I move location of my index.html file to
+other folder:
+
+/users/username/projects/my-website.com/NEW-templates/index.html
+
+and keep existing code:
+<script src="https://my-website.com/js/app.js"></script>
+
+And app.js file would be successfully located again.
+
+
+- Useful when linking to resources hosted on a CDN
+(Content Delivery Network).
+
+Cons of Absolute Paths:
+
+- Project becomes less portable because paths rely on
+a specific location
+
+Example:
+
+Because I have Web absolute path in my code:
+<script src="https://my-website.com/js/app.js"></script>
+
+If I move my project to other domain - 'new-super.com'
+
+My code would stop working.
+
+
+
+
+
+
+Relative path
+
+A relative path specifies the location
+of a file relative to the current directory,
+not based on root.
+
+What is my current directory?
+
+To see it in terminal:
+
+> pwd
+
+When specifying path inside
+your html or JS file, the current
+directory is the one where your file
+is located.
+
+Example:
+
+You have an image:
+/var/www/domain/images/logo.png
+
+You need to add this image into your html:
+/var/www/domain/index.html
+
+<img src="images/logo.png" alt="Logo">
+
+
+
+Why use relative path?
+
+You can move your files into other location
+on the server, and as long as you maintain
+the same file structure, the app will still work.
+
+For example:
+
+Our project:
+
+/users/projects/develop/      (change to 'prod')
+|--assets/
+|--|--images/
+|--|--|--logo.png
+|--index.html
+
+inside index.html we use relative path for image:
+
+<img src="assets/images/logo.png">
+
+1) We are inside index.html.
+2) Its current directory is /users/projects/develop/
+3) We have this path: assets/images/logo.png
+4) We start from current directory -> /users/projects/develop/
+5) Go to assets/ -> /users/projects/develop/assets/
+6) Go to images/ -> /users/projects/develop/assets/images/
+7) Locate file logo.png in your current directory.
+
+The result:
+/users/projects/develop/assets/images/logo.png
+
+
+Paths are fragile!
+
+If file structure changes, you need to update
+your paths. Otherwise, paths will be broken.
+
+For example,
+
+We had this structure:
+
+/users/project/production/
+|--assets/
+|--|--images/
+|--|--|--logo.png
+|--index.html
+
+If we move index.html into 'templates' folder
+and don't update the path of <img>:
+
+/users/project/production/
+|--assets/
+|--|--images/
+|--|--|--logo.png
+|--templates/
+|--|--index.html
+
+inside index.html we use relative path for image:
+
+<img src="assets/images/logo.png">
+
+1) We are inside index.html.
+2) Its current directory is /users/projects/develop/templates/
+3) We have this path: assets/images/logo.png
+4) We start from current directory -> /users/projects/develop/templates/
+5) Go to assets/ -> /users/projects/develop/templates/assets/
+6) There is no 'assets' inside 'templates'
+
+The result: path broken, image not found (404)
+
+
+
+
+
+
+
+
+
+
+
+
+
+Useful syntax for relative paths
+
+.
+..
+
+
+
+
+
+
+. (single dot)
+
+A reference to the current directory, explicitly.
+
+Example
+
+We are in /home/user/docs/
+Our current directory is 'docs/'
+
+./index.html
+
+1) We start from /home/user/docs/
+2) . means "stay in current directory" -> /home/user/docs/
+3) Locate file index.html in your current directory.
+
+The result: /home/user/docs/index.html
+
+
+
+
+Example
+
+./index.html
+index.html
+
+Both are exactly the same paths:
+"look for file index.html in current directory"
+
+If you don't use . in your path,
+the system assumes you have relative path
+to your current directory.
+
+
+
+
+
+
+.. (two dots)
+
+A reference to the parent directory.
+The directory one level up in the hierarchy.
+
+Example
+
+We are in /home/user/docs/
+Our current directory is 'docs/'
+
+../index.html
+
+1) We start from /home/user/docs/
+2) .. means "go one level up" -> /home/user/
+3) We are in /home/user/ now.
+4) Locate file index.html in your current directory.
+
+The result: /home/user/index.html
+
+Example
+
+We are in /home/user/docs/
+Our current directory is 'docs/'
+
+../../index.html
+
+1) We start from /home/user/docs/
+2) .. means "go one level up" -> /home/user/
+3) We are in /home/user/ now.
+4) .. means "go one level up" -> /home/
+4) Locate file index.html in your current directory.
+
+The result: /home/index.html
+
+
+
+
+Practice 3
+
+We are in /home/user/docs/
+
+What is resolved path for this?
+
+./../assets/styles.css
+
+Your answer
+---
+
+---
+
+
+
+
+Practice 4
+
+We are in /home/user/docs/
+
+What is resolved path for this?
+
+../../../hello.html
+
+Your answer
+---
+
+---
+
+
+
+
+
+Practice 5
+
+We are in /home/user/docs/
+
+What is resolved path for this?
+
+../../../../hello.html
+
+Your answer
+---
+
+---
+
+
+
+
+
+Practice 6
+
+Where webserver will be looking for this file?
+
+<img src="/logo.png">
+
+Your answer
+---
+
+---
+
+
+
+
+
+
+Practice 7
+
+You have this file structure:
+
+/users/project/production/
+|--assets/
+|--|--images/
+|--|--|--logo.png
+|--|--styles/
+|--|--|--style.css
+|--scripts/
+|--|--app.js
+|--templates/
+|--|--index.html
+|--home.html
+
+In index.html add logo.png
+In index.html add app.js
+In home.html add style.css
+In home.html create anchor (<a>) to index.html
+
+Your answer:
+---
+
+---
+
+
+
+
+
+
+
+Practice 8
+
+/users/project/production/
+|-- assets/
+|   |-- images/
+|   |   |-- banner.jpg
+|   |-- styles/
+|   |   |-- theme.css
+|-- scripts/
+|   |-- main.js
+|-- templates/
+|   |-- about.html
+|   home.html
+
+In home.html add banner.jpg
+In home.html add main.js
+In about.html add theme.css
+In about.html create a link to home.html
+
+Your answer:
+---
+
+
+---
+
+
+
+
+
+
+
+404 error
+
+It will happen if a resource is not found.
+
+demo: broken_path_example/index.html
+
+
+
+
+
+
+
+
+
+Thank you!
+

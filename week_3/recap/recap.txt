@@ -1,0 +1,180 @@
+Recap from Week 2
+(delivered on Week 3)
+
+
+We code for Web. These languages
+are commonly used for this task:
+
+- HTML
+- CSS
+- JavaScript (JS)
+
+Only JS is a programming language.
+
+In programming language you give instructions
+to the engine to do what you want.
+
+While writing instructions we will need:
+
+- store or save data
+- make decisions on data
+
+Example
+If I need to write code for adding two values,
+I need to store these values somewhere.
+
+This is what variables are for.
+
+const firstNumber = 2;
+const secondNumber = 3;
+const result = firstNumber + secondNumber;
+
+const - declaration of a variable type
+firstNumber/secondNumber/result - variables (their names)
+= - assignment operator. It assigns a value from right to the left
+1 and 2 - numbers, literally
++ - math plus sign
+; - each expression is finished by this sign
+
+
+git
+
+A tool to control versions of your files.
+
+git allows us to:
+
+- Track changes in our files
+- Create different versions (branches) of our files
+- Apply (copy, remove, add) changes between files
+- Backup our changes and allow to restore anything
+- Collaborate as a team on the same files
+
+To track changes we need to create a commit:
+
+1) git add <file name> OR git add . (for all changes)
+2) git commit -m "name for your change"
+
+States of changes:
+
+1) Untracked files.
+New files which you have added.
+
+2) Changes not staged for commit.
+You made change to existing file. It will appear in this section.
+
+3) Changes to be committed.
+You made a change in existing file and prepared it for
+commit.
+
+
+Useful commands:
+
+> git add .
+Add changes from all files.
+
+> git commit -m "Commit description"
+Create commit with description.
+
+> git commit -am "Commit description"
+= git add . + git commit -m
+
+> git commit
+
+This command will open terminal editor for you
+(usually, nano or vim). If you are not familiar
+with these editors, use -m flag instead:
+
+> git commit -m "your message"
+
+
+Branches
+
+I can create a copy of my project.
+This is what branch is in git.
+
+Each git repo by default has one branch, main.
+
+You can create as many branches as you wish.
+
+
+Useful commands:
+
+> git branch name-of-branch
+Copy all changes from current branch into "name-of-branch".
+You will still stay on your current branch.
+
+> git checkout -b name-of-branch
+Copy all changes from current branch into "name-of-branch"
+and switch to that branch.
+
+> git checkout existing-branch-name
+Switch from current branch to "existing-branch-name".
+
+
+
+Status
+
+> git status
+
+The main command which will tell you
+everything about what is currently
+happening with your code and git.
+
+
+Other git terminology
+
+repo (repository)
+
+This is a location where git will store all data.
+It can be local or remote.
+
+> git clone <url>
+
+Command to copy remote repository to your machine by url.
+
+> git log --oneline
+
+Display your commit history (all your changes)
+
+> git push origin test
+
+Here I specify where to push - origin.
+It is the name of github.com in my local repo.
+I also specify which branch I want to push - test.
+
+> git pull
+
+This command is to get latest changes from remote
+repository. With github classroom you will be
+pulling from your private repository.
+
+
+git commit
+
+Recommendations for good commit messages:
+
+1) Imperative mood
+"Add link to homepage"
+
+2) Keep them short
+"Fix typo in README"
+
+3) Start with a capital letter.
+"Add form element to index.html"
+
+4) Avoid vague messages.
+
+Bad:
+"Fix stuff"
+"change"
+"update"
+"fix"
+"typo"
+
+5) Write for your audience.
+
+- Your future self (we forget things quickly!).
+- Other developers on your team.
+
+Be consistent!
+Follow a consistent style across all your projects.
