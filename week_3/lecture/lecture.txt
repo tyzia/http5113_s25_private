@@ -64,7 +64,7 @@ Resolve the conflict - means delete all that is not needed
 and git add index.html
 
 > git status  // the conflict is still not resolved
-> git addd index.html  // resolve the conflict
+> git add index.html  // resolve the conflict
 > git commit // will create Merge commit
 > git log --oneline
 
@@ -195,7 +195,7 @@ if using relative paths (see below).
 
 Example:
 
-/Users/andrei/Documents/projects/my_project/*
+/Users/andrei/Documents/projects/my_project/index.html
 
 * - means that there are some files inside
 
@@ -364,7 +364,7 @@ Why use relative path?
 
 You can move your files into other location
 on the server, and as long as you maintain
-the same file structure, the app will still work.
+the same file structure, the app will still works.
 
 For example:
 
@@ -410,7 +410,7 @@ We had this structure:
 If we move index.html into 'templates' folder
 and don't update the path of <img>:
 
-/users/project/production/
+/users/project/develop/
 |--assets/
 |--|--images/
 |--|--|--logo.png
