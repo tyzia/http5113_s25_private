@@ -2,294 +2,690 @@
 
 Plan
 
+.gitignore
 HEAD
+git reflog
+
+terminal
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .gitignore
 
-(add about HEAD and gitignore)
+.gitignore is a special file listing
+all files or folders which
+you don't want to track with git.
 
+Usually we ignore:
 
-terminal commands
-vim
+- log files (*.log)
+- node_modules folder for npm projects
+- files with sensitive data (API keys, private keys)
+- IDE config files
 
+Useful website to create .gitignore file:
+https://gitignore.io/
 
 
+Demo
 
+> mkdir 1
+> cd 1
+> git init
+> vim index.html :i hello world :x
+> git status  // new file: index.html
+open this project in IntelliJ
+> git status // new file: .idea index.html
+> vim .gitignore :i .idea :x
+> git add .gitignore
+> git commit -m "Create gitignore"
+> git status // now git ignores .idea file
 
 
-Idea - talk about browser and networking and how Internet works
 
-Great! A 2-hour **practical lecture on browser DevTools**, especially focused on the **Network tab**, can be extremely valuable. It helps students connect what they see in the browser to how the web actually works — requests, responses, headers, HTTP status codes, and even debugging APIs.
 
-Here’s how to structure the lecture, keep it engaging, and add just enough **networking context** to make the Network tab meaningful without going too deep into theory.
 
----
 
-## ✅ **Lecture Goal**
 
-By the end, students should:
 
-* Understand what the Network tab shows.
-* Identify key parts of a request and response (URL, method, status, headers, payload).
-* Be able to debug slow loads, failed requests, or backend API issues.
-* Know the basics of how a browser talks to a server.
 
----
 
-## 🕑 **2-Hour DevTools + Networking Plan (with Focus on Network Tab)**
+HEAD
 
-| Time        | Segment                                  | Focus                                                     |
-| ----------- | ---------------------------------------- | --------------------------------------------------------- |
-| 0–15 min    | **Intro to DevTools**                    | What DevTools is, where to find it, overview of tabs      |
-| 15–25 min   | **Intro to HTTP & the Internet**         | Brief explanation of client-server, DNS, request/response |
-| 25–55 min   | **Network Tab Deep Dive (Static Pages)** | Open example site, explore requests, see what loads       |
-| 55–70 min   | **Network Tab + Dynamic/API Content**    | Use fetch/XHR examples, view API calls                    |
-| 70–85 min   | **Debugging Exercise**                   | Broken image, failed API call, cache issues               |
-| 85–100 min  | **Headers & Status Codes**               | Response headers, common HTTP status codes                |
-| 100–115 min | **POST, Payloads, JSON**                 | Sending form data, checking request bodies                |
-| 115–120 min | **Q\&A + What’s Next**                   | Recap, bonus resources, real-world use cases              |
 
----
+HEAD points to the current commit.
+Usually it is the latest commit in
+your branch
 
-## 📚 Core Concepts to Explain (Briefly)
+Demo:
+> cd 1
+> git log --oneline
+This will show all commits and will
+show that HEAD points to the latest
+commit in the history
 
-### 1. **How Browsers Load Pages**
+HEAD helps you to navigate your commits
+for such commands as 'rebase', 'reset', 'checkout'
 
-* DNS lookup → HTTP(S) request → Server responds → Browser renders
-* Each image, script, CSS file = one network request
+~ (tilde)
 
-### 2. **What You See in the Network Tab**
+~ refers to previous commit from HEAD
+~n refers to nth commit from HEAD
 
-* URL, method (GET/POST), status (200/404), size, time
-* Headers (Request and Response)
-* Request Payload (for POST/PUT)
-* Preview and Raw Response (JSON, HTML, etc.)
-* Timing (TTFB, etc.)
+Example:
 
----
+abcs Update file   <- HEAD
+cs61 Create file   <- HEAD~1
+hd7s Create folder <- HEAD~2
+ad61 Init project  <- HEAD~3
 
-## 🧪 Hands-On Examples
+HEAD~1 = move one commit before the current commit.
+HEAD~2 = move two commits before the current commit.
 
-1. **Inspect Google.com or Medium.com**
+Usage:
 
-   * Refresh and see what loads
-   * Sort by size/time/type
-   * Filter by XHR or JS
+> git show HEAD
+shows latest commit
 
-2. **XHR/Fetch Example**
+> git show HEAD~1
+shows commit before the latest
 
-   * Use a test API like: `https://jsonplaceholder.typicode.com/posts`
-   * Show POST and GET from browser console or simple form
 
-   ```js
-   fetch('https://jsonplaceholder.typicode.com/posts', {
-     method: 'POST',
-     headers: { 'Content-Type': 'application/json' },
-     body: JSON.stringify({ title: 'foo', body: 'bar', userId: 1 })
-   });
-   ```
 
-3. **404 or Broken Resource**
 
-   * Try loading a missing file or endpoint
-   * Show status codes and error messages
 
----
 
-## 🌐 Networking Concepts to Teach Lightly
 
-| Concept         | Simple Explanation                                       |
-| --------------- | -------------------------------------------------------- |
-| **HTTP**        | Language the browser and server use to talk              |
-| **DNS**         | Converts domain name to IP address                       |
-| **IP Address**  | Address of the server                                    |
-| **Ports**       | Like doors to specific services (e.g., port 80 for HTTP) |
-| **GET vs POST** | GET = retrieve data, POST = send data                    |
-| **HTTPS**       | Encrypted version of HTTP                                |
 
-Use simple diagrams or visuals:
 
-* Client → DNS → Server → Response back
-* Browser → Request → Response
 
----
+git reflog
 
-## 🛠️ Practice Exercise Ideas
 
-* **Find the status code of a failed request**
-* **Find the request that loads a specific image**
-* **Look at JSON returned from an API call**
-* **Find the response time of the slowest request**
-* **Inspect request headers sent by browser**
+It is a reference log (reflog)
+of all changes tracked by git.
 
----
+It records:
 
-## 🎁 Optional: Provide These
+- Commits you’ve made
+- Branch checkouts
+- Resets, merges, and rebases
 
-* Cheat sheet with **common status codes**, request types, and DevTools tips
-* Test page with:
+Unlike git log, which shows the commit history,
+git reflog shows all actions in git.
 
-  * API calls
-  * Missing resources
-  * Caching headers
-  * Form submission
+Example
 
----
+> git reflog
 
-## 🚀 Want Me to Prepare?
+f3a2b1d (HEAD -> main) HEAD@{0}: commit: Update homepage
+a7e4c90 HEAD@{1}: checkout: moving from feature/login to main
+d8e9f12 HEAD@{2}: commit: Add login button
 
-* 📝 A **PDF handout or cheat sheet** for DevTools/Network Tab?
-* 🧑‍🏫 A **slide deck** with visuals for your lecture?
-* 🧪 A **test HTML page with APIs/images/resources** for demo?
+HEAD@{0}, HEAD@{1}, HEAD@{2} - special references
 
-Just let me know what you want to provide students with — I can help build that for you.
+When git reflog is useful?
 
+git reflog is like a time-travel machine:
+allows you to come back to the past state.
 
+1) Lost commits during rebase
 
+You rebased your branch and lost some commits.
+How to undo?
 
+Fix:
 
-Teaching students about the terminal (command line) can absolutely be practical, engaging, and compact — even within a 1-2 hour window — **if you focus on hands-on, real-world tasks**. Here's how to do it:
+Check reflog to find the lost commit:
 
----
+> git reflog
 
-### ✅ **Objectives of a Practical Terminal Class (1-2 hrs)**
+f3a2b1d HEAD@{0}: reset: moving to HEAD~2
+a7e4c90 HEAD@{1}: commit: Important feature (LOST in next step)
+d8e9f12 HEAD@{2}: commit: Fix bug
 
-Focus on helping students:
+Restore the commit using its HEAD@{n} reference:
 
-1. **Understand what the terminal is and why it's useful.**
-2. **Perform basic navigation and file operations.**
-3. **Run simple, useful commands.**
-4. **Feel comfortable typing and exploring.**
+git checkout HEAD@{1}
 
----
 
-### 🧱 Core Topics to Cover (with Practical Examples)
+2) Recover a Deleted Branch
 
-| Topic                             | Example Command                    | What to Explain                               |
-| --------------------------------- | ---------------------------------- | --------------------------------------------- |
-| **1. What is Terminal?**          | `echo "Hello Terminal!"`           | A tool to control your computer using text.   |
-| **2. Navigation**                 | `pwd`, `ls`, `cd`                  | Where am I? What's here? Move around folders. |
-| **3. Files & Folders**            | `mkdir`, `touch`, `rm`, `cp`, `mv` | Create, delete, rename files/folders.         |
-| **4. Viewing Files**              | `cat`, `less`, `head`, `tail`      | See contents of files (logs, text).           |
-| **5. Text Editing**               | `nano` or `vim`                    | How to edit text (choose one editor).         |
-| **6. Searching**                  | `grep`, `find`                     | Find text or files (logs, errors, etc).       |
-| **7. Permissions (optional)**     | `chmod`, `ls -l`                   | Basic idea of who can access what.            |
-| **8. Running Programs / Scripts** | `python script.py`, `./run.sh`     | How to execute something.                     |
+You deleted a branch (git branch -D)
+and realized you needed it.
 
----
+Fix:
 
-### 🛠️ Suggested Practical Activities (hands-on)
+Find the last commit of the deleted branch in reflog:
 
-| Task                                       | Commands involved                   |
-| ------------------------------------------ | ----------------------------------- |
-| 1. Navigate to Desktop and create a folder | `cd`, `mkdir`                       |
-| 2. Create a text file and write into it    | `touch`, `echo`, `nano`             |
-| 3. Copy and move files around              | `cp`, `mv`                          |
-| 4. Search for a word in a file             | `grep "term" filename.txt`          |
-| 5. List files sorted by time or size       | `ls -lt`, `ls -lhS`                 |
-| 6. Run a script                            | `chmod +x script.sh`, `./script.sh` |
+> git reflog
 
----
+f3a2b1d HEAD@{0}: reset: moving to HEAD~2
+a7e4c90 HEAD@{1}: commit: Important feature (LOST in next step)
+d8e9f12 HEAD@{2}: commit: Fix bug
+a7e4c90 HEAD@{3}: checkout: moving from main to feature/login
 
-### 🧑‍🏫 How to Teach It
+Restore the branch:
 
-**1. Show, Then Do**
+git branch feature/login a7e4c90
 
-* Briefly explain a command (\~1 min)
-* Demonstrate live
-* Ask students to do the same
+3) Undo a Bad Rebase
 
-**2. Use a Cheat Sheet**
+A git rebase went wrong, and you want to
+return to the pre-rebase state.
 
-* Prepare a one-page cheat sheet for reference
-* Or give it after each section
+Fix:
 
-**3. Encourage Exploration**
+Find the commit before the rebase.
 
-* E.g., "Type `man ls` to see help"
-* Let them “break” things (safely)
+> git reflog
 
-**4. Use Visuals or Analogies**
+a7e4c90 HEAD@{4}: rebase (finish): returning to refs/heads/main
+d8e9f12 HEAD@{5}: rebase (start): checkout main
 
-* Use filesystem tree diagrams
-* Compare terminal to “talking directly to the brain of the computer”
+Reset to the pre-rebase state:
 
----
+> git reset --hard HEAD@{5}
 
-### 🕒 Sample 90-Minute Lesson Plan
 
-| Time      | Activity                                                                    |
-| --------- | --------------------------------------------------------------------------- |
-| 0–10 min  | Intro to Terminal + Why use it                                              |
-| 10–30 min | Navigation + File management                                                |
-| 30–50 min | Viewing/editing files + Searching                                           |
-| 50–65 min | Hands-on challenge: "Create a project folder, edit a file, search for text" |
-| 65–80 min | Scripts and running programs                                                |
-| 80–90 min | Q\&A + Recap + What’s next                                                  |
 
----
 
-### 🧩 Tips
 
-* Use Linux or macOS if possible (or WSL/Ubuntu on Windows)
-* Avoid overwhelming them with flags/options. Stick to common use.
-* Record demo commands in a shared doc so they can copy/paste.
-* Give mini-assignments to reinforce learning.
 
----
 
-Would you like a ready-made **cheat sheet**, **handout**, or a **slide deck** to go with this?
 
 
+Terminal
 
-| Command         | Description            |
-| --------------- | ---------------------- |
-| `pwd`           | Show current directory |
-| `ls`            | List files             |
-| `ls -l`         | Long list with details |
-| `cd foldername` | Change directory       |
-| `cd ..`         | Go up one level        |
-| `cd ~`          | Go to home directory   |
 
 
-| Command           | Description                |
-| ----------------- | -------------------------- |
-| `mkdir name`      | Create a folder            |
-| `touch file.txt`  | Create a file              |
-| `rm file.txt`     | Delete file                |
-| `rm -r folder/`   | Delete folder and contents |
-| `cp file1 file2`  | Copy file1 to file2        |
-| `mv file newname` | Rename or move file        |
 
 
-| Command         | Description         |
-| --------------- | ------------------- |
-| `cat file.txt`  | Print entire file   |
-| `less file.txt` | Scroll through file |
-| `head file.txt` | Show first 10 lines |
-| `tail file.txt` | Show last 10 lines  |
 
 
-| Command                   | Description               |
-| ------------------------- | ------------------------- |
-| `grep "text" file.txt`    | Search for "text" in file |
-| `find . -name "file.txt"` | Find file by name         |
 
-| Command         | Description                   |
-| --------------- | ----------------------------- |
-| `nano file.txt` | Edit file with Nano           |
-| `vim file.txt`  | Edit file with Vim (advanced) |
 
 
-| Command              | Description            |
-| -------------------- | ---------------------- |
-| `ls -l`              | View file permissions  |
-| `chmod +x script.sh` | Make script executable |
-| `./script.sh`        | Run executable script  |
+Let's dive into the command-line world
 
+You’ve probably heard terms like:
 
-| Command          | Description             |
-| ---------------- | ----------------------- |
-| `man command`    | Open manual for command |
-| `command --help` | Show help options       |
+- Terminal
+- CLI
+- Console
+- Shell
 
+Are they the same?
+These are mostly the same.
 
+1) Terminal = software where you type commands
+for Operating System. Shell is a synonym.
+
+2) Console = same as terminal (except for browser console).
+
+browser console is used for debugging,
+console commands do not work in browser console.
+
+3) CLI (Command Line Interface) = The text-based
+way of interacting with the app.
+
+They all mean:
+"the place where you type commands
+instead of clicking buttons."
+
+
+Every major software has:
+
+1) GUI (Graphic User Interface)
+2) CLI (Command Line Interface)
+
+CLI allows us to control the app
+from terminal:
+
+- Running servers (npm start)
+- Installing tools (npm install)
+- Managing files (ls, cd, mkdir)
+- Using git (git add, git commit)
+
+
+Example:
+
+> git add index.html
+
+You're essentially saying:
+
+git - "Hey, git application"
+add - "Execute your 'add' command"
+index.html - "On index.html"
+
+CLI is "closer to the engine".
+You're speaking directly to the app's
+functionality without UI abstraction.
+
+GUI is like a layer between app & user.
+With CLI you are closer to the app.
+
+
+CLI gives us speed and efficiency.
+
+Example
+
+Task: Navigate to a folder projects/my_app/src
+
+In GUI (Graphic User Interface) clicking:
+
+- Click on Finder app (MacOS).
+- Click on projects.
+- Click on my_app.
+- Click on src.
+
+In CLI navigate instantly:
+
+> cd projects/my_app/src
+
+
+CLI power comes with flags
+
+Flags expose advanced features often not
+available in GUI.
+
+Example
+
+> git add . -p
+
+Interactive staging:
+Lets you partially stage changes
+(even single lines)
+
+GUI - no equivalent (most GUIs stage whole files)
+
+We can combine two flags in one:
+
+Example
+
+Instead of:
+> ls -l -a
+
+Have:
+> ls -la
+
+> ls -la
+Detailed file listing.
+
+-l → Long format (permissions, owner, size)
+-a → Show hidden files (like .gitignore)
+
+GUI  hide this metadata or bury it
+in properties dialogs
+
+Example
+
+> rm -rf
+
+Force recursive delete,
+meaning delete all inside, including
+subfolders.
+
+-r → Recursive (delete folders)
+-f → Force (no "Are you sure?" prompts)
+
+GUI either lack this or require multiple
+confirmations.
+
+
+
+How to know which flags are available?
+
+Use help or manual:
+
+> git add --help
+
+or
+
+> man git add
+
+To show the help page, your terminal
+uses less - the default pager to show help.
+
+How to navigate through help doc with less?
+
+j - one line down
+k - one line up
+space - one screen down
+b - one screen up
+g - go to top of file
+G - go to bottom of file
+/ - start search
+(e.g. /-p -> search for -p)
+n - next search match
+N - previous search match
+q - exit
+
+
+A short help doc comes with -h
+
+Example
+
+> git add -h
+
+
+Common flags:
+
+-v → Verbose output
+-f → Force action
+-r → Recursive
+-y → Auto-confirm
+
+
+
+
+
+
+Practice:
+
+Open terminal.
+Check which options are available for 'ls' command.
+
+
+
+
+
+
+
+
+We can run commands sequentially.
+
+&&
+
+Runs sequentially only if previous commands succeed.
+
+Example:
+
+> git add . && git commit -m "Add new file"
+
+This will run 'git add .' and if it is success,
+then run 'git commit'.
+
+We can do more:
+
+> git checkout main && git pull && git checkout -b new-branch && git cherry-pick abks1 && git push -u origin new-branch
+
+This sequence will break (stop doing anything) after first failed command.
+
+If git pull failed, for example,
+the command would stop and will not
+create a branch or anything else.
+
+
+
+
+Practice
+
+Open terminal.
+Create a folder 'demo', navigate to 'demo' folder,
+create another folder 'new', navigate to 'new' folder,
+show full path (current working directory).
+All in one line.
+
+
+Hints
+cd - to navigate to folder
+mkdir - to create a folder
+pwd - to show full path
+
+
+
+
+
+
+
+
+Answer
+(mkdir demo && cd demo && mkdir new && cd new && pwd)
+
+
+
+
+
+
+
+
+Piping
+
+The pipe (|) is one of the most powerful
+features in terminals.
+
+It lets you chain commands together,
+passing the output of one command
+as input to the next.
+
+Demo:
+
+demo/log.txt
+
+> cat log.txt | grep "ERROR" | wc -l
+
+Here:
+
+cat - Outputs the contents of a file
+grep - Filters the data
+wc - Word count
+
+Note: grep = Global Regular Expression Print
+
+GUI equivalent:
+
+- Open file
+- Ctrl+F
+- Manually count matches.
+
+Example
+
+> ps aux | sort -nk 3 | tail -n 3
+
+- ps aux = Lists all processes
+- sort -nk 3 = Sorts by CPU usage (column 3)
+- tail -n 3 = Shows the last 3 (highest CPU)
+
+GUI equivalent:
+
+- Open Task Manager
+- Sort by CPU
+- Scroll
+
+
+
+
+
+
+
+Practice
+
+Open file log.txt.
+Find all lines with "WARNING".
+Display them in the terminal.
+
+
+
+
+
+
+
+
+Answer
+(cat log.txt | grep "WARNING")
+
+
+
+
+
+
+
+
+Error: Command not found
+
+This means that my terminal
+doesn't "know" about command.
+
+Let's demo:
+
+1) Create a tiny program
+
+> cd install/
+> vim hello
+
+#!/bin/bash
+echo "Hello world! I am demo program"
+
+> chmod +x hello
+
+2) Try to run it
+
+> hello
+-bash: hello: command not found
+
+It says "not found". Where did it search?
+
+
+
+PATH
+
+PATH determines where the terminal
+looks for commands
+
+To see your PATH:
+
+> echo $PATH
+
+/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+: - separates different paths
+
+So my PATH has these:
+
+/usr/local/bin
+/usr/bin
+/bin
+/usr/sbin
+/sbin
+
+These are the locations on my machine,
+where terminal was looking for 'hello'
+command and didn't find.
+
+If I don't want to copy my command
+into one of these folders, a workaround
+is to specify path to my command.
+
+I have it in install/ folder, so:
+
+> ./hello
+Hello world! I am demo program
+
+If I want to be able to run this
+program from anywhere, I need to copy
+it into one of the folders specified in PATH:
+
+> sudo cp hello /usr/local/bin
+
+Now I can run my command:
+
+> hello
+Hello world! I am demo program
+
+
+(to clean up: sudo rm /usr/local/bin/hello )
+
+
+
+Navigation with terminal
+
+> pwd
+Show current directory
+
+> ls
+List files
+
+> ls -la
+List all files (incl. hidden)
+
+> cd folder
+Change directory
+
+> cd ..
+Go up one level
+
+> cd
+or
+> cd ~
+Go to home directory
+
+Each user on the system has their
+home directory specified in the
+profile. ~ goes there
+
+
+
+Manipulating files & folders
+
+> mkdir name
+Create a folder
+
+> touch file.txt
+Create a file
+
+> rm file.txt
+Delete a file
+
+> rm -r folder/
+Delete folder and contents
+
+> cp file.txt new.txt
+Copy file.txt as new.txt
+
+> mv file.txt name.txt
+Rename file.txt to name.txt
+
+> mv file.txt ..
+Move file.txt to parent directory
+
+
+
+Contents of the file
+
+> cat file.txt
+Print entire file
+
+
+
+Searching
+
+> grep "ERROR" log.txt
+Search for "ERROR" text in log.txt file
+
+> find . -name "file.txt"
+Find file by name
+
+
+
+
+
+
+
+
+
+Thank you!

@@ -1,0 +1,115 @@
+name: Automated Checks
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  check_restricted_files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Need full history for diff
+
+      - name: Fetch base branch
+        run: git fetch origin main
+
+      - name: Validate changes
+        id: check_restricted_files
+        run: |
+          # Read allowed files
+          mapfile -t ALLOWED_FILES < <(grep -v '^[[:space:]]*$' .github/allowed-changes.txt | sed 's|/$||')
+
+          # Get files with ACTUAL content changes (not just git metadata)
+          CHANGED_FILES=$(git diff --name-only --diff-filter=ACMRT origin/main HEAD)
+
+          for file in $CHANGED_FILES; do
+            file="${file#./}"
+            file="${file%/}"
+
+            # Skip allowed paths
+            [[ "$file" == "exercise/"* ]] && continue
+
+            # Check allowlist
+            allowed=false
+            for pattern in "${ALLOWED_FILES[@]}"; do
+              if [[ "$file" == "$pattern" || "$file" == "$pattern"/* ]]; then
+                allowed=true
+                break
+              fi
+            done
+
+            # For restricted files, verify content matches main
+            if ! $allowed; then
+              if ! git diff --quiet origin/main HEAD -- "$file"; then
+                # Detect if file is newly added (doesn't exist in main)
+                if ! git ls-tree --name-only -r origin/main | grep -Fxq "$file"; then
+                  file_status="NEW FILE"
+                  recovery_cmd="git rm --cached \"$file\" && rm -f \"$file\""
+                else
+                  file_status="MODIFIED FILE"
+                  recovery_cmd="git checkout origin/main -- \"$file\""
+                fi
+          
+                echo "::error::❌ Illegal modification detected::"
+                echo "================================================"
+                echo "File: $file"
+                echo "Type: Restricted $file_status (must match main branch)"
+                echo "================================================"
+                echo "Allowed files pattern:"
+                cat .github/allowed-changes.txt
+                echo ""
+                echo "Changes detected:"
+                echo "---------------------------------"
+                git diff origin/main HEAD -- "$file" | head -n 20
+                echo ""
+                echo "How to recover:"
+                echo "---------------------------------"
+                echo "1. To remove this unauthorized change:"
+                echo "   $recovery_cmd"
+                echo "2. Commit the correction:"
+                echo "   git commit -m \"Remove unauthorized $file\""
+                echo "3. git push"
+                echo "================================================"
+                exit 1
+              fi
+            fi
+          done
+
+          echo "✅ All changes validated"
+    outputs:
+      allowed: ${{ steps.check_restricted_files.outcome == 'success' }}
+
+  verify_terminal_exercise:
+    needs: [check_restricted_files]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify folder and file structure
+        run: |
+          # Check if 'exercise/solution' folder exists
+          if [ ! -d "exercise/solution" ]; then
+            echo "::error::❌ Error: 'exercise/solution' folder not found!"
+            exit 1
+          fi
+
+          # Check if 'task.txt' exists
+          if [ ! -f "exercise/solution/task.txt" ]; then
+            echo "::error::❌ Error: 'task.txt' not found!"
+            exit 1
+          fi
+
+          # Verify file content
+          EXPECTED_LINE="The answer to life, the universe, and everything is love."
+          if ! grep -qFx "$EXPECTED_LINE" exercise/solution/task.txt; then
+            echo "::error::❌ Error: 'task.txt' content is incorrect!"
+            echo "Expected: '$EXPECTED_LINE'"
+            echo "Found: '$(cat exercise/solution/task.txt)'"
+            exit 1
+          fi
+
+          echo "✅ Terminal exercise verification passed!"
