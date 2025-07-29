@@ -60,6 +60,20 @@ open this project in IntelliJ
 
 
 
+If file is tracked, how to ignore it?
+
+> git rm --cached <file>
+> git commit -m "Stop tracking <file> (now in .gitignore)"
+
+
+
+
+
+
+
+
+
+
 
 
 
