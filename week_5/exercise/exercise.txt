@@ -1,0 +1,72 @@
+
+Use Chrome DevTools to inspect, modify, and debug a webpage.
+
+1. Elements Tab Tasks (DOM & CSS Manipulation)
+Demo File: css/css.html
+Tasks:
+
+Inspect the DOM:
+
+Find the <p> tag and change its text to "Hello, DevTools!".
+
+CSS Debugging:
+
+Identify which CSS rule sets the paragraph color.
+
+Disable one rule at a time to see how the color changes.
+
+Add a new rule to make the text purple and set font-size: 20px.
+
+Box Model:
+
+Increase the padding of the <p> tag to 20px and observe the Box Model visualization.
+
+Delete the <p> tag from the DOM, then undo it (Ctrl+Z/Cmd+Z).
+
+
+
+
+
+
+2. Console Tab Tasks (JavaScript Interaction)
+Tasks:
+
+Use $0:
+
+Inspect the <p> tag, then in the Console:
+
+Change its text: $0.textContent = "I love DevTools!";
+
+Make its background lightblue.
+
+window Object:
+
+Create a global variable: window.studentName = "Your Name";
+
+Log it: console.log(studentName);
+
+
+
+
+
+3. Network Tab Tasks (HTTP Requests Analysis)
+Demo File: demo/demo.html (intentionally broken to trigger a 404)
+Tasks:
+
+Monitor Requests:
+
+Open the Network tab, then refresh the page.
+
+Find the failed request for styles.css (status 404).
+
+Headers Analysis:
+
+Click the request and identify:
+
+Request Headers: User-Agent, Accept.
+
+Response Headers: Status, Content-Type.
+
+Fix the Error:
+
+In the Sources tab, correct the path to styles.css and save (Overrides).
