@@ -1,0 +1,110 @@
+Recap from Week 4
+(delivered on Week 5)
+
+
+.gitignore is a special file listing
+all files or folders which
+you don't want to track with git.
+
+
+HEAD points to the current commit.
+
+Example:
+
+abcs Update file   <- HEAD
+cs61 Create file   <- HEAD~1
+hd7s Create folder <- HEAD~2
+ad61 Init project  <- HEAD~3
+
+
+git reflog - a reference log
+of all changes tracked by git.
+
+Use reflog to go back in time and
+undo any changes.
+
+Terminal
+
+We can use Command Line Interface of a program
+to execute commands.
+
+CLI gives us speed and efficiency.
+
+Example:
+
+> cd projects/my_app/src
+
+CLI power comes with flags.
+
+Example:
+
+> git add . -p
+Partially stages changes
+
+> ls -la
+
+-l = "long" format (permissions, owner, size)
+-a = show "all" (incl. hidden files)
+
+Common flags:
+
+-v = "verbose" output
+-f = "force" action
+-r = "recursive"
+-y = "yes" - auto-confirm
+
+How to know which flags are available?
+
+man
+--help
+
+Example:
+
+> git add --help
+> man ls
+
+&&
+
+We can run commands
+sequentially with &&.
+
+Example:
+
+> git add . && git commit -m "Add new file"
+
+Pipe (|)
+
+Pipe lets you chain commands together,
+passing the output of one command
+as input to the next.
+
+Example:
+
+> cat log.txt | grep "ERROR" | wc -l
+3
+
+PATH determines locations where the terminal
+looks for commands.
+
+To see these locations:
+
+> echo $PATH
+/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+: - separates different paths
+
+/usr/local/bin
+/usr/bin
+/bin
+/usr/sbin
+/sbin
+
+To fix the error 'Command not found',
+do one of the below:
+
+1) Copy the app into one of the folders,
+specified in PATH.
+
+> sudo cp hello /usr/local/bin
+
+2) Specify the full path to the command
