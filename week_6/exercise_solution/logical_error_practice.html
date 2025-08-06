@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logic Puzzle Solver</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .instructions {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin-bottom: 20px;
+        }
+        .hint {
+            font-style: italic;
+            font-size: small;
+        }
+        #result {
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<h1>Logic Error Debugging Practice</h1>
+
+<div class="instructions">
+    <h2>Exercise Instructions:</h2>
+    <ol>
+        <li>Open this page in Chrome</li>
+        <li>Read the puzzle, solve it yourself and check the result</li>
+        <li>The result has mistake. You need to fix JS code.</li>
+        <li>Check the Console (F12)</li>
+        <li>Add breakpoints to JS code</li>
+        <li>Identify the logic error</li>
+        <li>Fix the error in your editor</li>
+        <li>Verify in browser that error is fixed</li>
+    </ol>
+</div>
+
+<div class="puzzle">
+    <p>Mike has 2 apples. If it is day after Monday, Jessica has 3 more apples than Mike. If it is day after Wednesday, Jessica has 1 more apple than Mike. How many apples does Jessica have if it is Tuesday?</p>
+
+    <div id="solution">
+        <h3>Solution:</h3>
+        <div>
+            <p>On Tuesday Jessica has <span id="apples"></span></p>
+        </div>
+        <p class="hint">(Correct answer: 5)</p>
+    </div>
+</div>
+<p id="result">Congrats on fixing all bugs!</p>
+
+<script>
+    function solvePuzzle() {
+        const mikesApples = 2;
+        const today = "Tuesday";
+        let jessicasApples;
+        const addThreeApples = ['Monday', 'Tuesday'];
+        const addOneApple = ['Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        let applesToAdd;
+
+        if (addThreeApples.includes(today)) {
+            applesToAdd = 3;
+        }
+        if (addOneApple.includes(today)) {
+            applesToAdd = 1;
+        }
+        jessicasApples = mikesApples + applesToAdd;
+        document.getElementById('apples').textContent = jessicasApples;
+    }
+    solvePuzzle();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Do not change code below
+
+    function checkResult() {
+        const correct = document.getElementById('apples').textContent === '5';
+        correct && (document.getElementById('result').style.display = 'block');
+    }
+    checkResult();
+</script>
+</body>
+</html>
